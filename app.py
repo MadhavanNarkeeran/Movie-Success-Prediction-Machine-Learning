@@ -642,4 +642,6 @@ def api_visualization_data():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
+    print(f"🚀 Starting Flask app on port: {port}")
+    print(f"🌐 Environment PORT: {os.environ.get('PORT', 'Not set')}")
     app.run(host='0.0.0.0', port=port, debug=False)
