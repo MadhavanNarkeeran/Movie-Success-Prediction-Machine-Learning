@@ -33,14 +33,8 @@ class MovieAnalysisApp:
         self.test_indices = None
         
         try:
-            print("🚀 Starting MovieAnalysisApp initialization...")
             self.load_and_prepare_data()
-            print("✅ Data loaded and prepared successfully")
             self.train_model()
-            print("✅ Model trained successfully")
-            print(f"📊 Model accuracy: {self.accuracy:.3f}")
-            print(f"🎯 Model type: {self.model_name}")
-            print("✅ Model training completed successfully!")
         except Exception as e:
             print(f"❌ Error initializing MovieAnalysisApp: {str(e)}")
             import traceback
@@ -345,15 +339,7 @@ class MovieAnalysisApp:
         }
 
 # Initialize the app
-print("🔧 Initializing MovieAnalysisApp...")
-try:
-    movie_app = MovieAnalysisApp()
-    print("✅ MovieAnalysisApp initialized successfully!")
-except Exception as e:
-    print(f"❌ Error initializing MovieAnalysisApp: {str(e)}")
-    import traceback
-    traceback.print_exc()
-    raise
+movie_app = MovieAnalysisApp()
 
 @app.route('/')
 def home():
@@ -657,14 +643,5 @@ def api_visualization_data():
 # Configure port for Railway
 port = int(os.environ.get('PORT', 5000))
 
-# Start Flask app when imported by Gunicorn
-print(f"🚀 Starting Flask app on port: {port}")
-print(f"🌐 Environment PORT: {os.environ.get('PORT', 'Not set')}")
-print("🌐 Flask app is starting...")
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port, debug=False)
-    print("🌐 Flask app started successfully!")
-else:
-    # When imported by Gunicorn, just print that we're ready
-    print("🌐 Flask app ready for Gunicorn!")
+    app.run()
