@@ -38,8 +38,9 @@ class MovieAnalysisApp:
             print("✅ Data loaded and prepared successfully")
             self.train_model()
             print("✅ Model trained successfully")
-            print(f"📊 Model accuracy: {self.accuracy:.3f}")
-            print(f"🎯 Model type: {self.model_name}")
+        print(f"📊 Model accuracy: {self.accuracy:.3f}")
+        print(f"🎯 Model type: {self.model_name}")
+        print("✅ Model training completed successfully!")
         except Exception as e:
             print(f"❌ Error initializing MovieAnalysisApp: {str(e)}")
             import traceback
@@ -344,7 +345,15 @@ class MovieAnalysisApp:
         }
 
 # Initialize the app
-movie_app = MovieAnalysisApp()
+print("🔧 Initializing MovieAnalysisApp...")
+try:
+    movie_app = MovieAnalysisApp()
+    print("✅ MovieAnalysisApp initialized successfully!")
+except Exception as e:
+    print(f"❌ Error initializing MovieAnalysisApp: {str(e)}")
+    import traceback
+    traceback.print_exc()
+    raise
 
 @app.route('/')
 def home():
@@ -651,4 +660,6 @@ port = int(os.environ.get('PORT', 5000))
 if __name__ == '__main__':
     print(f"🚀 Starting Flask app on port: {port}")
     print(f"🌐 Environment PORT: {os.environ.get('PORT', 'Not set')}")
+    print("🌐 Flask app is starting...")
     app.run(host='0.0.0.0', port=port, debug=False)
+    print("🌐 Flask app started successfully!")
