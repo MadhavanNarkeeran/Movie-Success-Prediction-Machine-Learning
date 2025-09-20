@@ -38,9 +38,9 @@ class MovieAnalysisApp:
             print("✅ Data loaded and prepared successfully")
             self.train_model()
             print("✅ Model trained successfully")
-        print(f"📊 Model accuracy: {self.accuracy:.3f}")
-        print(f"🎯 Model type: {self.model_name}")
-        print("✅ Model training completed successfully!")
+            print(f"📊 Model accuracy: {self.accuracy:.3f}")
+            print(f"🎯 Model type: {self.model_name}")
+            print("✅ Model training completed successfully!")
         except Exception as e:
             print(f"❌ Error initializing MovieAnalysisApp: {str(e)}")
             import traceback
