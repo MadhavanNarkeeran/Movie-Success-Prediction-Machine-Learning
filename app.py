@@ -657,9 +657,14 @@ def api_visualization_data():
 # Configure port for Railway
 port = int(os.environ.get('PORT', 5000))
 
+# Start Flask app when imported by Gunicorn
+print(f"🚀 Starting Flask app on port: {port}")
+print(f"🌐 Environment PORT: {os.environ.get('PORT', 'Not set')}")
+print("🌐 Flask app is starting...")
+
 if __name__ == '__main__':
-    print(f"🚀 Starting Flask app on port: {port}")
-    print(f"🌐 Environment PORT: {os.environ.get('PORT', 'Not set')}")
-    print("🌐 Flask app is starting...")
     app.run(host='0.0.0.0', port=port, debug=False)
     print("🌐 Flask app started successfully!")
+else:
+    # When imported by Gunicorn, just print that we're ready
+    print("🌐 Flask app ready for Gunicorn!")
