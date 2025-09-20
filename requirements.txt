@@ -6,3 +6,4 @@ textblob
 scipy
 seaborn
 ipykernel
+gunicorn
