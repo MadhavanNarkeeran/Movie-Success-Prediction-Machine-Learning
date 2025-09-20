@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Success Predictor - Insights{% endblock %}
+
+{% block content %}
+<div class="insights-page">
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">
+                <i class="fas fa-chart-bar text-primary me-3"></i>
+                Data Insights & Analysis
+            </h1>
+            <p class="lead text-muted">
+                Discover key findings from our machine learning analysis of 540+ movies
+            </p>
+        </div>
+
+        <!-- Model Performance -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="insight-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-brain text-primary me-2"></i>
+                        Model Performance
+                    </h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <div class="metric-value" id="modelAccuracy">Loading...</div>
+                                <div class="metric-label">Accuracy</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <div class="metric-value" id="totalMovies">Loading...</div>
+                                <div class="metric-label">Movies Analyzed</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <div class="metric-value" id="falsePositiveRate">Loading...</div>
+                                <div class="metric-label">False Positive Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Error Rates -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <div class="metric-card">
+                                <div class="metric-value" id="falseNegativeRate">Loading...</div>
+                                <div class="metric-label">False Negative Rate</div>
+                                <small class="text-muted">Missing actual successes</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="metric-card">
+                                <div class="metric-value" id="modelName">Loading...</div>
+                                <div class="metric-label">Best Model</div>
+                                <small class="text-muted">Selected algorithm</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Confusion Matrix -->
+                    <div class="mt-4">
+                        <h5>Confusion Matrix</h5>
+                        <div class="confusion-matrix" id="confusionMatrix">
+                            <div class="matrix-container">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th colspan="2">Predicted</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>Flop</th>
+                                            <th>Success</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th rowspan="2" class="align-middle">Actual</th>
+                                            <td class="table-header">Flop</td>
+                                            <td id="tn" class="table-success">-</td>
+                                            <td id="fp" class="table-danger">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-header">Success</td>
+                                            <td id="fn" class="table-danger">-</td>
+                                            <td id="tp" class="table-success">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Load insights data when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadInsights();
+});
+
+async function loadInsights() {
+    try {
+        const response = await fetch('/api/insights');
+        const insights = await response.json();
+        
+        // Update model performance metrics
+        document.getElementById('modelAccuracy').textContent = (insights.accuracy * 100).toFixed(1) + '%';
+        document.getElementById('totalMovies').textContent = insights.total_movies;
+        document.getElementById('falsePositiveRate').textContent = (insights.false_positive_rate * 100).toFixed(2) + '%';
+        document.getElementById('falseNegativeRate').textContent = (insights.false_negative_rate * 100).toFixed(2) + '%';
+        document.getElementById('modelName').textContent = insights.best_model || 'Decision Tree';
+        
+        // Update confusion matrix
+        const cm = insights.confusion_matrix;
+        document.getElementById('tn').textContent = cm[0][0];
+        document.getElementById('fp').textContent = cm[0][1];
+        document.getElementById('fn').textContent = cm[1][0];
+        document.getElementById('tp').textContent = cm[1][1];
+        
+    } catch (error) {
+        console.error('Error loading insights:', error);
+    }
+}
+</script>
+{% endblock %}

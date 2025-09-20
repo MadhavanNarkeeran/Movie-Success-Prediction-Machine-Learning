@@ -1,0 +1,37 @@
+# Virtual Environment
+movie-analysis-env/
+venv/
+env/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Flask instance folder
+instance/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp

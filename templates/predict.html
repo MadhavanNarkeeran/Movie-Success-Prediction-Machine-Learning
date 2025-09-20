@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Success Predictor - Predict{% endblock %}
+
+{% block content %}
+<div class="predict-page">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold">
+                        <i class="fas fa-magic text-primary me-3"></i>
+                        Predict Movie Success
+                    </h1>
+                    <p class="lead text-muted">
+                        Enter your movie details and get an AI-powered prediction
+                    </p>
+                </div>
+
+                <!-- Prediction Form -->
+                <div class="prediction-form-container">
+                    <form id="predictionForm" class="prediction-form needs-validation" method="POST" action="/predict">
+                        <div class="row g-4">
+                            <!-- Basic Info -->
+                            <div class="col-12">
+                                <h4 class="section-title">
+                                    <i class="fas fa-info-circle me-2"></i>Basic Information
+                                </h4>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="runtime" class="form-label">Runtime (minutes)</label>
+                                <input type="number" class="form-control" id="runtime" name="Runtime" 
+                                       min="60" max="300" value="120" required>
+                                <div class="form-text">Typical range: 90-180 minutes</div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="stars" class="form-label">Number of Famous Movie Stars</label>
+                                <input type="number" class="form-control" id="stars" name="Stars" 
+                                       min="0" max="5" value="2" required>
+                                <div class="form-text">0-5 major movie stars in the cast</div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="year" class="form-label">Release Year</label>
+                                <input type="number" class="form-control" id="year" name="Year" 
+                                       min="1990" max="2025" value="2023" required>
+                            </div>
+                            
+                            <!-- Budget Info -->
+                            <div class="col-12 mt-5">
+                                <h4 class="section-title">
+                                    <i class="fas fa-dollar-sign me-2"></i>Budget Information
+                                </h4>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="budget" class="form-label">Production Budget ($)</label>
+                                <input type="number" class="form-control" id="budget" name="Budget" 
+                                       min="1000000" max="500000000" step="100000" value="50000000" required>
+                                <div class="form-text">Enter amount in dollars (e.g., 50000000 for $50M)</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-1" onclick="setBudget('budget', 200000000)">Set $200M</button>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="promo" class="form-label">Promotional Budget ($)</label>
+                                <input type="number" class="form-control" id="promo" name="Promo" 
+                                       min="100000" max="200000000" step="100000" value="25000000" required>
+                                <div class="form-text">Enter amount in dollars (e.g., 25000000 for $25M)</div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-1" onclick="setBudget('promo', 10000000)">Set $10M</button>
+                            </div>
+                            
+                            <!-- Categories -->
+                            <div class="col-12 mt-5">
+                                <h4 class="section-title">
+                                    <i class="fas fa-tags me-2"></i>Movie Details
+                                </h4>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="season" class="form-label">Release Season</label>
+                                <select class="form-select" id="season" name="season" required>
+                                    <option value="">Choose season...</option>
+                                    <option value="Spring">Spring</option>
+                                    <option value="Summer">Summer</option>
+                                    <option value="Fall">Fall</option>
+                                    <option value="Winter">Winter</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="rating" class="form-label">MPAA Rating</label>
+                                <select class="form-select" id="rating" name="rating" required>
+                                    <option value="">Choose rating...</option>
+                                    <option value="PG">PG</option>
+                                    <option value="PG13">PG-13</option>
+                                    <option value="R">R</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="genre" class="form-label">Genre</label>
+                                <select class="form-select" id="genre" name="genre" required>
+                                    <option value="">Choose genre...</option>
+                                    <option value="Action">Action</option>
+                                    <option value="Drama">Drama</option>
+                                    <option value="Fantasy">Fantasy</option>
+                                    <option value="Romantic Comedy">Romantic Comedy</option>
+                                    <option value="Science fiction">Science Fiction</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Reviews -->
+                            <div class="col-12 mt-5">
+                                <h4 class="section-title">
+                                    <i class="fas fa-comment me-2"></i>Sample Reviews (Optional)
+                                </h4>
+                                <p class="text-muted">Enter sample reviews to include sentiment analysis</p>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="r1" class="form-label">Review 1</label>
+                                <textarea class="form-control" id="r1" name="R1" rows="3" 
+                                          placeholder="Enter a sample review..."></textarea>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="r2" class="form-label">Review 2</label>
+                                <textarea class="form-control" id="r2" name="R2" rows="3" 
+                                          placeholder="Enter a sample review..."></textarea>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="r3" class="form-label">Review 3</label>
+                                <textarea class="form-control" id="r3" name="R3" rows="3" 
+                                          placeholder="Enter a sample review..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-crystal-ball me-2"></i>
+                                Predict Success
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Error Section -->
+                {% if error %}
+                <div class="alert alert-danger mt-5">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    {{ error }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function setBudget(fieldId, amount) {
+    document.getElementById(fieldId).value = amount;
+}
+</script>
+{% endblock %}

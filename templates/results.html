@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="results-page">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold">
+                        <i class="fas fa-magic text-primary me-3"></i>
+                        Prediction Results
+                    </h1>
+                    <p class="lead text-muted">
+                        Your movie success prediction is ready!
+                    </p>
+                </div>
+
+                <!-- Results Section -->
+                <div class="result-card">
+                    <div class="text-center mb-4">
+                        <div class="prediction-icon mb-3">
+                            {% if prediction %}
+                                <i class="fas fa-trophy text-success" style="font-size: 6rem;"></i>
+                            {% else %}
+                                <i class="fas fa-times-circle text-danger" style="font-size: 6rem;"></i>
+                            {% endif %}
+                        </div>
+                        <h2 class="prediction-text mb-3">
+                            {% if prediction %}
+                                <span class="text-success display-2 fw-bold">SUCCESS!</span><br>
+                                <small class="text-muted fs-4">This movie is predicted to be successful</small>
+                            {% else %}
+                                <span class="text-danger display-2 fw-bold">FLOP</span><br>
+                                <small class="text-muted fs-4">This movie is predicted to be unsuccessful</small>
+                            {% endif %}
+                        </h2>
+                    </div>
+                    
+                    <div class="prediction-details">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Prediction Details:</strong> This result is based on our machine learning model trained on historical movie data. 
+                            While predictions can provide valuable insights, they should be used as guidance alongside other factors when making investment decisions.
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="/predict" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-plus me-2"></i>Make Another Prediction
+                        </a>
+                        <a href="/" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-home me-2"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-chart-line text-primary mb-3" style="font-size: 3rem;"></i>
+                                <h5>Model Performance</h5>
+                                <p class="text-muted">Our Random Forest model achieves 81.5% accuracy on test data, making it highly reliable for predictions.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-database text-success mb-3" style="font-size: 3rem;"></i>
+                                <h5>Training Data</h5>
+                                <p class="text-muted">Trained on 540 movies with features like budget, genre, release timing, and audience sentiment analysis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.results-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.result-card {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.prediction-icon {
+    animation: bounceIn 1s ease-out;
+}
+
+.prediction-text {
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.prediction-details {
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+</style>
+{% endblock %}

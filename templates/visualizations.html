@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Success Predictor - Data Visualizations{% endblock %}
+
+{% block content %}
+<div class="visualizations-page">
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">
+                <i class="fas fa-chart-line text-primary me-3"></i>
+                Data Visualizations
+            </h1>
+            <p class="lead text-muted">
+                Explore the movie dataset through interactive charts and graphs
+            </p>
+        </div>
+
+        <!-- Budget vs Movie Stars Boxplot -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="insight-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-box text-primary me-2"></i>
+                        Budget vs Movie Stars
+                    </h3>
+                    <p class="text-muted mb-4">
+                        Boxplot showing the distribution of movie budgets by number of movie stars.
+                    </p>
+                    <div class="chart-container">
+                        <div id="boxplot-loading" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Generating boxplot...</p>
+                        </div>
+                        <img id="budgetStarsBoxplot" src="" alt="Budget vs Movie Stars Boxplot" style="max-width: 100%; height: auto; display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Year vs Budget Lineplot -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="insight-card">
+                    <h3 class="card-title">
+                        <i class="fas fa-chart-line text-primary me-2"></i>
+                        Budget vs Year
+                    </h3>
+                    <p class="text-muted mb-4">
+                        Line plot showing budget trends over the years.
+                    </p>
+                    <div class="chart-container">
+                        <div id="lineplot-loading" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Generating lineplot...</p>
+                        </div>
+                        <img id="yearBudgetLineplot" src="" alt="Budget vs Year Lineplot" style="max-width: 100%; height: auto; display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Load visualization data and create charts
+document.addEventListener('DOMContentLoaded', function() {
+    loadVisualizationData();
+});
+
+async function loadVisualizationData() {
+    try {
+        const response = await fetch('/api/visualization-data');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        
+        // Display the actual seaborn plots from the notebook
+        const boxplotImg = document.getElementById('budgetStarsBoxplot');
+        const lineplotImg = document.getElementById('yearBudgetLineplot');
+        
+        // Hide loading spinners and show images
+        document.getElementById('boxplot-loading').style.display = 'none';
+        document.getElementById('lineplot-loading').style.display = 'none';
+        
+        boxplotImg.src = 'data:image/png;base64,' + data.boxplot;
+        lineplotImg.src = 'data:image/png;base64,' + data.lineplot;
+        
+        boxplotImg.style.display = 'block';
+        lineplotImg.style.display = 'block';
+        
+    } catch (error) {
+        console.error('Error loading visualization data:', error);
+        // Show error message to user
+        document.querySelector('.container').innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Error Loading Visualizations</h4>
+                <p>There was an error loading the visualization data: ${error.message}</p>
+                <hr>
+                <p class="mb-0">Please try refreshing the page or contact support if the problem persists.</p>
+            </div>
+        `;
+    }
+}
+
+
+</script>
+{% endblock %}
