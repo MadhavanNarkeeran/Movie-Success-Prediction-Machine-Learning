@@ -438,6 +438,11 @@ def api_health():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/ready')
+def ready():
+    """Simple readiness check"""
+    return "OK", 200
+
 @app.route('/api/predict', methods=['POST'])
 def api_predict():
     try:
