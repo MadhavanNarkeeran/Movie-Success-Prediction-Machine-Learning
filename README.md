@@ -2,6 +2,10 @@
 
 A machine learning web application that predicts movie box office success using a Random Forest model trained on 540+ movies.
 
+## Deployed Link
+
+[https://movie-success-prediction.up.railway.app](https://movie-success-prediction.up.railway.app)
+
 ## Features
 
 - **🎯 Movie Success Prediction**: Interactive form to predict if a movie will be successful
@@ -84,3 +88,4 @@ A machine learning web application that predicts movie box office success using 
 - **Data Visualization**: Seaborn
 - **ML Libraries**: Scikit-Learn
 - **Sentiment Analysis**: TextBlob
+- **Deployed**: Railway
