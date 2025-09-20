@@ -640,8 +640,10 @@ def api_visualization_data():
         print(f"Error in visualization data API: {str(e)}")  # Debug print
         return jsonify({'error': str(e)}), 400
 
+# Configure port for Railway
+port = int(os.environ.get('PORT', 5000))
+
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
     print(f"🚀 Starting Flask app on port: {port}")
     print(f"🌐 Environment PORT: {os.environ.get('PORT', 'Not set')}")
     app.run(host='0.0.0.0', port=port, debug=False)
