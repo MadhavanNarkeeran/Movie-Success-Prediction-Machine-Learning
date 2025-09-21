@@ -4,7 +4,7 @@ A machine learning web application that predicts movie box office success using 
 
 ## Deployed Link
 
-[https://movie-success-prediction.up.railway.app](https://movie-success-prediction.up.railway.app)
+[https://movie-success-predictor.up.railway.app](https://movie-success-predictor.up.railway.app)
 
 ## Features
 
