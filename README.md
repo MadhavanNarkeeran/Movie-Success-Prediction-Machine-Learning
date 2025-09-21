@@ -75,7 +75,7 @@ A machine learning web application that predicts movie box office success using 
 
 5. **Web Interface**:
    - Flask backend serves the ML model via REST API
-   - Modern HTML/CSS/JavaScript frontend
+   - Modern HTML, Bootstrap/CSS, JavaScript frontend
    - Real-time predictions and interactive visualizations
 
 ## Technologies Used
